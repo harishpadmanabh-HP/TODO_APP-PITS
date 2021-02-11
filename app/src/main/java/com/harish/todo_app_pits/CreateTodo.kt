@@ -33,7 +33,7 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
 
         val newItem = TODOItem(
             false,
-            101,
+            (100..500).random(),
             title,
             39,
             System.currentTimeMillis()
