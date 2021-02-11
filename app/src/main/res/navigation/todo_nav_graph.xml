@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/todo_nav_graph"
+    app:startDestination="@id/allTodosFragment">
+
+    <fragment
+        android:id="@+id/allTodosFragment"
+        android:name="com.harish.todo_app_pits.AllTodosFragment"
+        android:label="fragment_all_todos"
+        tools:layout="@layout/fragment_all_todos" />
+    <fragment
+        android:id="@+id/yourTodoFragment"
+        android:name="com.harish.todo_app_pits.YourTodoFragment"
+        android:label="fragment_your_todo"
+        tools:layout="@layout/fragment_your_todo" />
+</navigation>

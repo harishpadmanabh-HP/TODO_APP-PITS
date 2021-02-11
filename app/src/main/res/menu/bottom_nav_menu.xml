@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/allTodosFragment"
+        android:title="All TODOs"
+        android:icon="@drawable/ic_all_todo"
+        />
+    <item android:id="@+id/yourTodoFragment"
+        android:title="Your TODOs"
+        android:icon="@drawable/ic_your_todo"
+        />
+
+</menu>
