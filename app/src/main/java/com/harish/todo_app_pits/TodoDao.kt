@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface TodoDao {
 
-    @Query("SELECT * FROM tb_todo ORDER BY id DESC")
+    @Query("SELECT * FROM tb_todo ORDER BY created_at DESC")
     fun getAllData(): LiveData<List<TODOItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

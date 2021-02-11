@@ -32,8 +32,7 @@ class AllTodosFragment : Fragment(),TodoListener {
     ): View? {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_all_todos, container, false)
-        viewModel.fetchTodos()
-        setupObservers()
+        //viewModel.fetchTodos()
         root.compose_fab.setOnClickListener {
             startActivity(Intent(requireContext(),CreateTodo::class.java))
         }
@@ -43,10 +42,17 @@ class AllTodosFragment : Fragment(),TodoListener {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupObservers()
+    }
+
     private fun setupObservers() {
         viewModel.apply {
 
             allTodosFromDb.observe(requireActivity(), Observer {
+                if(it.isNullOrEmpty())
+                    viewModel.fetchTodos()
                 setupRecyclerView(it)
             })
 

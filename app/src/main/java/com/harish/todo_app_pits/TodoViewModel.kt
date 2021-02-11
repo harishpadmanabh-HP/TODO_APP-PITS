@@ -2,6 +2,7 @@ package com.harish.todo_app_pits
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -38,8 +39,13 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
     })
 
     fun insertData(toDoData: TODOItem) {
+        Log.e("ROOM vm","DataInserted ${toDoData.title}       ${toDoData.id}")
+
         viewModelScope.launch(Dispatchers.IO) {
-            todoDao.insertData(toDoData)
+            todoDao.insertData(toDoData.also {
+                it.createdAt = System.currentTimeMillis()
+            })
+            Log.e("ROOM","DataInserted ${toDoData.title}")
         }
     }
 

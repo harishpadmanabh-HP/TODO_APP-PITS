@@ -3,12 +3,16 @@ package com.harish.todo_app_pits
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_create_todo.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
+import kotlin.coroutines.CoroutineContext
 
-class CreateTodo : AppCompatActivity() {
+class CreateTodo() : AppCompatActivity(),CoroutineScope {
 
     private lateinit var viewModel: TodoViewModel
 
@@ -29,14 +33,24 @@ class CreateTodo : AppCompatActivity() {
 
         val newItem = TODOItem(
             false,
-            (55..100).random(),
+            101,
             title,
-            (0..10).random()
+            39,
+            System.currentTimeMillis()
             )
 
         if(title.isNotEmpty()){
-            viewModel.insertData(newItem)
-            Toast.makeText(this, "Todo Created !!!", Toast.LENGTH_SHORT).show()
+          async {
+              viewModel.insertData(newItem)
+              Log.e("insertData called","DataInserted ${title} ")
+
+              withContext(Main){
+                  Toast.makeText(this@CreateTodo, "Todo Created !!!", Toast.LENGTH_SHORT).show()
+
+              }
+          }
+//            viewModel.insertData(newItem)
+//            Toast.makeText(this, "Todo Created !!!", Toast.LENGTH_SHORT).show()
             //onBackPressed()
         }else
         {
@@ -45,4 +59,7 @@ class CreateTodo : AppCompatActivity() {
 
 
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO+ SupervisorJob()
 }
