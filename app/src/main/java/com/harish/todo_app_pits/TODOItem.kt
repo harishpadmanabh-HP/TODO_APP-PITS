@@ -27,8 +27,8 @@ import com.google.gson.annotations.SerializedName
         val userId: Int,
 
         @ColumnInfo(name = "created_at")
-        var createdAt: Long
+        var createdAt: Long,
 
-
-
+        @ColumnInfo(name = "desc")
+        var desc: String = " "
         )

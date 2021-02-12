@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(navController)
         setupActionBarWithNavController(navController,appBarConfiguration)
-        bottomNavigationView.selectedItemId = R.id.yourTodoFragment
+        //bottomNavigationView.selectedItemId = R.id.yourTodoFragment
     }
 
     override fun onSupportNavigateUp(): Boolean {

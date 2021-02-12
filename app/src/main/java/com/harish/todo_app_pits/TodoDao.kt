@@ -15,6 +15,13 @@ interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertData(toDoData: TODOItem)
 
+    @Query("SELECT * FROM tb_todo WHERE id=:id")
+    fun getTodoById(id:Int):LiveData<TODOItem>
+
+    @Query("SELECT * FROM tb_todo WHERE title LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): LiveData<List<TODOItem>>
+
+
 
 
 }

@@ -15,6 +15,7 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
     private val todoRepository = TodoRepository(app)
     val events = MutableLiveData<String>()
     val allTodosFromDb: LiveData<List<TODOItem>> = todoDao.getAllData()
+    private lateinit var details: LiveData<TODOItem>
 
 
     fun fetchTodos()=todoRepository.getTodosFromServer(onApiCallback = {
@@ -44,10 +45,26 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.insertData(toDoData.also {
                 it.createdAt = System.currentTimeMillis()
+                it.desc= if(!toDoData.desc.isNullOrEmpty())
+                          toDoData.desc
+                else
+                    " "
             })
             Log.e("ROOM","DataInserted ${toDoData.title}")
         }
     }
+
+    fun getTodoById(id:Int):LiveData<TODOItem> = todoRepository.getTodoById(id)
+
+    fun searchDatabase(searchQuery: String): LiveData<List<TODOItem>>{
+        return todoRepository.searchDatabase(searchQuery)
+    }
+
+
+
+
+
+
 
 
 

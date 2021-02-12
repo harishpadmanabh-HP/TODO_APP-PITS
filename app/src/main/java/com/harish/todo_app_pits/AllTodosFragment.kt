@@ -2,17 +2,16 @@ package com.harish.todo_app_pits
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_all_todos.*
 import kotlinx.android.synthetic.main.fragment_all_todos.view.*
 
-class AllTodosFragment : Fragment(),TodoListener {
+class AllTodosFragment : Fragment(),TodoListener,SearchView.OnQueryTextListener {
 
     private lateinit var root: View
     private lateinit var viewModel: TodoViewModel
@@ -21,6 +20,7 @@ class AllTodosFragment : Fragment(),TodoListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewmodel()
+        setHasOptionsMenu(true)
 
 
     }
@@ -56,6 +56,8 @@ class AllTodosFragment : Fragment(),TodoListener {
                 setupRecyclerView(it)
             })
 
+
+
             events.observe(requireActivity(), Observer {
                 Snackbar.make(root,it,Snackbar.LENGTH_LONG).show()
             })
@@ -78,6 +80,44 @@ class AllTodosFragment : Fragment(),TodoListener {
         viewModel =
             ViewModelProvider(requireActivity(), viewModelFactory).get(TodoViewModel::class.java)
 
+    }
+
+    override fun onTodoItemClicked(id: Int) {
+        startActivity(Intent(requireContext(),TodoDetails::class.java)
+            .putExtra("id",id))
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.topbar_menu, menu)
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+
+        if (query != null && query.isNotEmpty()) {
+            val searchQuery = "%$query%"
+
+            viewModel.searchDatabase(searchQuery).observe(requireActivity(), Observer {
+                 setupRecyclerView(it)
+            })
+        }
+
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null && query.isNotEmpty()) {
+            val searchQuery = "%$query%"
+
+            viewModel.searchDatabase(searchQuery).observe(requireActivity(), Observer {
+                setupRecyclerView(it)
+            })
+        }
+
+        return true
     }
 
 

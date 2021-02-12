@@ -36,7 +36,9 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
             (100..500).random(),
             title,
             39,
-            System.currentTimeMillis()
+            System.currentTimeMillis(),
+            desc
+
             )
 
         if(title.isNotEmpty()){
@@ -46,7 +48,7 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
 
               withContext(Main){
                   Toast.makeText(this@CreateTodo, "Todo Created !!!", Toast.LENGTH_SHORT).show()
-
+                  startActivity(Intent(this@CreateTodo,MainActivity::class.java))
               }
           }
 //            viewModel.insertData(newItem)

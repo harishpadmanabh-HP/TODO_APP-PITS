@@ -41,5 +41,13 @@ class TodoRepository(val context: Context) {
         todoDao.insertData(toDoData)
     }
 
+    fun getTodoById(id:Int)=
+        todoDao.getTodoById(id)
+
+    fun searchDatabase(searchQuery: String): LiveData<List<TODOItem>> {
+        return todoDao.searchDatabase(searchQuery)
+    }
+
+
 
 }

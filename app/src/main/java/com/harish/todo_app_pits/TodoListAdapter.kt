@@ -22,8 +22,11 @@ class TodoListAdapter(val listener: TodoListener) : ListAdapter<TODOItem,TodoLis
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         val item = getItem(position)
         holder.itemView.apply {
-            title_textview.text = item.title
+            title_textview.text = "${item.title}\n${item.desc}"
             handleStatus(item.completed,status_textview)
+            setOnClickListener {
+                listener.onTodoItemClicked(item.id)
+            }
         }
 
     }
@@ -57,5 +60,5 @@ object TodoDiffUtil:DiffUtil.ItemCallback<TODOItem>(){
 }
 
 interface TodoListener{
-
+fun onTodoItemClicked(id:Int)
 }

@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/allTodosFragment"
         android:name="com.harish.todo_app_pits.AllTodosFragment"
-        android:label="fragment_all_todos"
+        android:label="All TODOs"
         tools:layout="@layout/fragment_all_todos" />
     <fragment
         android:id="@+id/yourTodoFragment"
         android:name="com.harish.todo_app_pits.YourTodoFragment"
-        android:label="fragment_your_todo"
+        android:label="Your TODOs"
         tools:layout="@layout/fragment_your_todo" />
 </navigation>
