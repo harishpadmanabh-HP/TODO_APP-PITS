@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,14 +8,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_all_todos.*
+import com.google.gson.Gson
+import com.harish.todo_app_pits.*
+import com.harish.todo_app_pits.adapters.TodoListAdapter
+import com.harish.todo_app_pits.adapters.TodoListener
+import com.harish.todo_app_pits.data.models.TODOItem
+import com.harish.todo_app_pits.viewmodels.TodoViewModel
+import com.harish.todo_app_pits.viewmodels.TodoViewModelFactory
 import kotlinx.android.synthetic.main.fragment_all_todos.view.*
 
-class AllTodosFragment : Fragment(),TodoListener,SearchView.OnQueryTextListener {
+class AllTodosFragment : Fragment(),
+    TodoListener,SearchView.OnQueryTextListener {
 
     private lateinit var root: View
     private lateinit var viewModel: TodoViewModel
-    private val adapter by lazy { TodoListAdapter(this) }
+    private val adapter by lazy {
+        TodoListAdapter(
+            this
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +43,10 @@ class AllTodosFragment : Fragment(),TodoListener,SearchView.OnQueryTextListener 
     ): View? {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_all_todos, container, false)
-        //viewModel.fetchTodos()
+        viewModel.fetchTodos()
         root.compose_fab.setOnClickListener {
-            startActivity(Intent(requireContext(),CreateTodo::class.java))
+            startActivity(Intent(requireContext(),
+                CreateTodo::class.java))
         }
 
 
@@ -76,15 +88,22 @@ class AllTodosFragment : Fragment(),TodoListener,SearchView.OnQueryTextListener 
     }
 
     private fun initViewmodel() {
-        val viewModelFactory = TodoViewModelFactory(requireActivity().application)
+        val viewModelFactory =
+            TodoViewModelFactory(
+                requireActivity().application
+            )
         viewModel =
             ViewModelProvider(requireActivity(), viewModelFactory).get(TodoViewModel::class.java)
 
     }
 
-    override fun onTodoItemClicked(id: Int) {
-        startActivity(Intent(requireContext(),TodoDetails::class.java)
-            .putExtra("id",id))
+    override fun onTodoItemClicked(item: TODOItem) {
+        startActivity(Intent(requireContext(),
+            TodoDetails::class.java)
+            .putExtra("id",item.id)
+            .putExtra("item", Gson().toJson(item))
+        )
+
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.topbar_menu, menu)

@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.data.models
 
 
 import androidx.room.ColumnInfo

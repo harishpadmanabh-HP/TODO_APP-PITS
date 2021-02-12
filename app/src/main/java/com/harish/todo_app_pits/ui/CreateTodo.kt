@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.harish.todo_app_pits.R
+import com.harish.todo_app_pits.viewmodels.TodoViewModel
+import com.harish.todo_app_pits.viewmodels.TodoViewModelFactory
+import com.harish.todo_app_pits.data.models.TODOItem
+import com.harish.todo_app_pits.utils.UserUtils
 import kotlinx.android.synthetic.main.activity_create_todo.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -22,7 +27,8 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
         initViewmodel()
     }
     private fun initViewmodel() {
-        val viewModelFactory = TodoViewModelFactory(application)
+        val viewModelFactory =
+            TodoViewModelFactory(application)
         viewModel =  ViewModelProvider(this, viewModelFactory).get(TodoViewModel::class.java)
 
     }
@@ -34,22 +40,22 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
 
         val newItem = TODOItem(
             false,
-            (100..500).random(),
+            (300..500).random(),
             title,
             id!!,
             System.currentTimeMillis(),
             desc
 
-            )
+        )
 
         if(title.isNotEmpty()){
           async {
               viewModel.insertData(newItem)
-              Log.e("insertData called","DataInserted ${title} ")
 
               withContext(Main){
                   Toast.makeText(this@CreateTodo, "Todo Created !!!", Toast.LENGTH_SHORT).show()
-                  startActivity(Intent(this@CreateTodo,MainActivity::class.java))
+                  startActivity(Intent(this@CreateTodo,
+                      MainActivity::class.java))
               }
           }
 //            viewModel.insertData(newItem)
@@ -65,4 +71,10 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO+ SupervisorJob()
+
+    override fun onDestroy() {
+        coroutineContext.cancelChildren()
+        super.onDestroy()
+
+    }
 }

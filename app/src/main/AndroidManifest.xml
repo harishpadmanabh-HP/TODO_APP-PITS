@@ -13,12 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TODO_APPPITS"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TodoDetails"
+        <activity android:name=".ui.TodoDetails"
             android:label="Your TODO Details"
             ></activity>
-        <activity android:name=".CreateTodo"
+        <activity android:name=".ui.CreateTodo"
             android:label=" Create your TODO"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,18 +1,20 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
+import com.harish.todo_app_pits.data.db.TodoDatabase
+import com.harish.todo_app_pits.data.models.TODOItem
+import com.harish.todo_app_pits.data.repository.TodoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TodoViewModel(val app: Application) : AndroidViewModel(app){
 
     private val todoDao = TodoDatabase.getDatabase(app).toDoDao()
-    private val todoRepository = TodoRepository(app)
+    private val todoRepository =
+        TodoRepository(app)
     val events = MutableLiveData<String>()
     val allTodosFromDb: LiveData<List<TODOItem>> = todoDao.getAllData()
 
@@ -22,7 +24,6 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
             if (response != null) {
 
                         for(item in response){
-                           // todoDao.insertData(item)
                             insertData(item)
                         }
 
@@ -38,7 +39,6 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
     })
 
     fun insertData(toDoData: TODOItem) {
-        Log.e("ROOM vm","DataInserted ${toDoData.title}       ${toDoData.id}")
 
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.insertData(toDoData.also {
@@ -48,7 +48,6 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
                 else
                     " "
             })
-            Log.e("ROOM","DataInserted ${toDoData.title}")
         }
     }
 
@@ -59,6 +58,18 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
     }
 
     fun getTodoByUserId(id:Int): LiveData<List<TODOItem>> = todoRepository.getTodoByUserId(id)
+
+    fun updateStatus(id: Int,status:Boolean){
+        viewModelScope.launch (IO){
+            todoRepository.updateStatus(id,status)
+        }
+    }
+
+    fun deleteTodo(toDoData: TODOItem){
+        viewModelScope.launch (IO){
+            todoRepository.deleteTodo(toDoData)
+        }
+    }
 
 
 

@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.utils
 
 import android.app.Application
 import android.content.Context

@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.harish.todo_app_pits.R
+import com.harish.todo_app_pits.data.models.TODOItem
 import kotlinx.android.synthetic.main.item_todo_row_layout.view.*
 
-class TodoListAdapter(val listener: TodoListener) : ListAdapter<TODOItem,TodoListAdapter.Viewholder>(TodoDiffUtil){
+class TodoListAdapter(val listener: TodoListener) : ListAdapter<TODOItem, TodoListAdapter.Viewholder>(
+    TodoDiffUtil
+){
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
@@ -25,7 +29,7 @@ class TodoListAdapter(val listener: TodoListener) : ListAdapter<TODOItem,TodoLis
             title_textview.text = "${item.title}\n${item.desc}"
             handleStatus(item.completed,status_textview)
             setOnClickListener {
-                listener.onTodoItemClicked(item.id)
+                listener.onTodoItemClicked(item)
             }
         }
 
@@ -60,5 +64,5 @@ object TodoDiffUtil:DiffUtil.ItemCallback<TODOItem>(){
 }
 
 interface TodoListener{
-fun onTodoItemClicked(id:Int)
+fun onTodoItemClicked(item: TODOItem)
 }

@@ -1,5 +1,6 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.data.network
 
+import com.harish.todo_app_pits.data.models.TODOItem
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

@@ -1,9 +1,11 @@
-package com.harish.todo_app_pits
+package com.harish.todo_app_pits.data.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.harish.todo_app_pits.data.models.TODOItem
+import com.harish.todo_app_pits.utils.Utils
+import com.harish.todo_app_pits.data.network.Apis
+import com.harish.todo_app_pits.data.db.TodoDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +54,10 @@ class TodoRepository(val context: Context) {
 
     fun getTodoByUserId(id: Int) =
         todoDao.getToDoByUserId(id)
+
+    fun updateStatus(id: Int,status: Boolean)=todoDao.updateStatus(id,status)
+
+    fun deleteTodo(toDoData: TODOItem)=todoDao.deleteItem(toDoData)
 
 
 }
