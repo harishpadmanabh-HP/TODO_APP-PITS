@@ -2,10 +2,15 @@ package com.harish.todo_app_pits
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 
 object Utils {
+
+    private var preferences: SharedPreferences? = null
+
 
     public fun hasInternet(context: Context):Boolean{
         val connectivityManager = context.getSystemService(
@@ -22,5 +27,19 @@ object Utils {
 
         }
     }
+
+    fun isDeviceinDarkMode(context: Context):Boolean{
+        var isDark = false
+        val mode = context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+        when (mode) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                isDark = true
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {}
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
+        }
+        return isDark
+    }
+
 
 }

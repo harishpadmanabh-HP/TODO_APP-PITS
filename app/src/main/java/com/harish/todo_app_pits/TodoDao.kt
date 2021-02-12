@@ -12,6 +12,9 @@ interface TodoDao {
     @Query("SELECT * FROM tb_todo ORDER BY created_at DESC")
     fun getAllData(): LiveData<List<TODOItem>>
 
+    @Query("SELECT * FROM tb_todo WHERE userid=:userId")
+    fun getToDoByUserId(userId:Int): LiveData<List<TODOItem>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertData(toDoData: TODOItem)
 

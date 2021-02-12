@@ -15,8 +15,6 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
     private val todoRepository = TodoRepository(app)
     val events = MutableLiveData<String>()
     val allTodosFromDb: LiveData<List<TODOItem>> = todoDao.getAllData()
-    private lateinit var details: LiveData<TODOItem>
-
 
     fun fetchTodos()=todoRepository.getTodosFromServer(onApiCallback = {
         status, message, response ->
@@ -59,6 +57,9 @@ class TodoViewModel(val app: Application) : AndroidViewModel(app){
     fun searchDatabase(searchQuery: String): LiveData<List<TODOItem>>{
         return todoRepository.searchDatabase(searchQuery)
     }
+
+    fun getTodoByUserId(id:Int): LiveData<List<TODOItem>> = todoRepository.getTodoByUserId(id)
+
 
 
 

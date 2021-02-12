@@ -37,17 +37,21 @@ class TodoRepository(val context: Context) {
         })
     }
 
-     fun insertData(toDoData: TODOItem){
+    fun insertData(toDoData: TODOItem) {
         todoDao.insertData(toDoData)
     }
 
-    fun getTodoById(id:Int)=
+    fun getTodoById(id: Int) =
         todoDao.getTodoById(id)
 
     fun searchDatabase(searchQuery: String): LiveData<List<TODOItem>> {
         return todoDao.searchDatabase(searchQuery)
+
+
     }
 
+    fun getTodoByUserId(id: Int) =
+        todoDao.getToDoByUserId(id)
 
 
 }

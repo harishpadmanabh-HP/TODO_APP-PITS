@@ -30,12 +30,13 @@ class CreateTodo() : AppCompatActivity(),CoroutineScope {
     fun onCreateToDoClicked(view: View) {
         val title = title_edittext.text.toString()
         val desc = desc_edittext.text.toString()//optional
+        val id = UserUtils.init(this).getLocalUserId()
 
         val newItem = TODOItem(
             false,
             (100..500).random(),
             title,
-            39,
+            id!!,
             System.currentTimeMillis(),
             desc
 

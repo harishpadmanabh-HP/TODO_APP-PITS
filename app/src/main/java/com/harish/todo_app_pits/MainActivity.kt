@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        checkAndCreateUserId()
         navController = findNavController(R.id.fragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -27,6 +28,16 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         setupActionBarWithNavController(navController,appBarConfiguration)
         //bottomNavigationView.selectedItemId = R.id.yourTodoFragment
+    }
+
+    private fun checkAndCreateUserId() {
+        val userID = UserUtils.init(this).getLocalUserId()
+        if(userID == -1 || userID==null)
+        {
+            UserUtils.init(this).setLocalUserId((500..999).random())
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
