@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits.ui
+package com.harish.todo_app_pits.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,9 +13,14 @@ import com.harish.todo_app_pits.*
 import com.harish.todo_app_pits.adapters.TodoListAdapter
 import com.harish.todo_app_pits.adapters.TodoListener
 import com.harish.todo_app_pits.data.models.TODOItem
+import com.harish.todo_app_pits.ui.CreateTodo
+import com.harish.todo_app_pits.ui.TodoDetails
 import com.harish.todo_app_pits.viewmodels.TodoViewModel
 import com.harish.todo_app_pits.viewmodels.TodoViewModelFactory
 import kotlinx.android.synthetic.main.fragment_all_todos.view.*
+import kotlinx.android.synthetic.main.fragment_all_todos.view.compose_fab
+import kotlinx.android.synthetic.main.fragment_all_todos.view.todo_list
+import kotlinx.android.synthetic.main.fragment_your_todo.view.*
 
 class AllTodosFragment : Fragment(),
     TodoListener,SearchView.OnQueryTextListener {
@@ -83,6 +88,8 @@ class AllTodosFragment : Fragment(),
         }else{
             adapter.submitList(todos)
             root.todo_list.adapter = adapter
+            root.todo_list.smoothScrollToPosition(0)
+
         }
 
     }

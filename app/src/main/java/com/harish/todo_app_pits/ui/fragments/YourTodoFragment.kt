@@ -1,4 +1,4 @@
-package com.harish.todo_app_pits.ui
+package com.harish.todo_app_pits.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,8 @@ import com.harish.todo_app_pits.viewmodels.TodoViewModel
 import com.harish.todo_app_pits.adapters.TodoListAdapter
 import com.harish.todo_app_pits.adapters.TodoListener
 import com.harish.todo_app_pits.data.models.TODOItem
+import com.harish.todo_app_pits.ui.CreateTodo
+import com.harish.todo_app_pits.ui.TodoDetails
 import com.harish.todo_app_pits.utils.UserUtils
 import kotlinx.android.synthetic.main.fragment_your_todo.view.*
 
@@ -105,6 +107,7 @@ class YourTodoFragment : Fragment(),
             root.load_layout.visibility = View.GONE
             adapter.submitList(todos)
             root.todo_list.adapter = adapter
+            root.todo_list.smoothScrollToPosition(0)
         }
 
     }
